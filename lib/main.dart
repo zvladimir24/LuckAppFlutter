@@ -16,6 +16,9 @@ void main() async {
 
   final List<int> tappedHatNumbers = [];
 
+  final LuckWidgetRepositoryImpl luckWidgetRepository =
+      LuckWidgetRepositoryImpl();
+
   final SaveTheRandomRabbitRepositoryImpl saveTheRandomRabbitRepository =
       SaveTheRandomRabbitRepositoryImpl(prefs);
 
@@ -60,6 +63,7 @@ void main() async {
   );
 
   runApp(MyApp(
+    luckWidgetRepository: luckWidgetRepository,
     loadTheRandomRabbitRepository: loadTheRandomRabbitRepository,
     saveTheRandomRabbitRepository: saveTheRandomRabbitRepository,
     gameLogicRepository: gameLogicRepository,
@@ -76,6 +80,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final LuckWidgetRepository luckWidgetRepository;
   final LoadTheRandomRabbitRepository loadTheRandomRabbitRepository;
   final SaveTheRandomRabbitRepository saveTheRandomRabbitRepository;
   final GameLogicRepository gameLogicRepository;
@@ -91,6 +96,7 @@ class MyApp extends StatelessWidget {
 
   const MyApp({
     Key? key,
+    required this.luckWidgetRepository,
     required this.loadTheRandomRabbitRepository,
     required this.saveTheRandomRabbitRepository,
     required this.gameLogicRepository,
@@ -128,6 +134,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: HomePage(
+          luckWidgetRepository: luckWidgetRepository,
           loadTheRandomRabbitRepository: loadTheRandomRabbitRepository,
           saveTheRandomRabbitRepository: saveTheRandomRabbitRepository,
           saveTheRabbitRepository: saveTheRabbitRepository,

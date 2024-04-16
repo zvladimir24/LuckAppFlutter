@@ -20,6 +20,9 @@ void main() async {
   final List<int> tappedHatNumbers = [];
   final List<int> rabbitNumber = [];
 
+  final LuckWidgetRepositoryImpl luckWidgetRepository =
+      LuckWidgetRepositoryImpl();
+
   final SaveTheRandomRabbitRepositoryImpl saveTheRandomRabbitRepository =
       SaveTheRandomRabbitRepositoryImpl(prefs);
 
@@ -52,6 +55,7 @@ void main() async {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp(
+      luckWidgetRepository: luckWidgetRepository,
       loadTheRandomRabbitRepository: loadTheRandomRabbitRepository,
       saveTheRandomRabbitRepository: saveTheRandomRabbitRepository,
       gameLogicRepository: gameLogicRepository,

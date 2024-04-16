@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_your_luck_app/bloc/game_bloc/game_bloc_bloc.dart';
+import 'package:test_your_luck_app/features/data/game_logic_repository_impl.dart';
 import 'package:test_your_luck_app/features/domain/game_logic_repository.dart';
 
 class HomePage extends StatelessWidget {
+  final LuckWidgetRepository luckWidgetRepository;
   final SaveTheRandomRabbitRepository saveTheRandomRabbitRepository;
   final LoadTheRandomRabbitRepository loadTheRandomRabbitRepository;
   final SaveTheRabbitRepository saveTheRabbitRepository;
@@ -19,6 +21,7 @@ class HomePage extends StatelessWidget {
 
   const HomePage({
     super.key,
+    required this.luckWidgetRepository,
     required this.saveTheRandomRabbitRepository,
     required this.loadTheRandomRabbitRepository,
     required this.saveTheRabbitRepository,
@@ -112,6 +115,7 @@ class HomePage extends StatelessWidget {
                           final tappedHatNumbers =
                               data.length > 1 ? data[1] : [];
                           final randomRabbit = data.isNotEmpty ? data[2] : -1;
+
                           final widgets =
                               generateWidgetsRepository.generateWidgets(
                             context,
@@ -121,7 +125,13 @@ class HomePage extends StatelessWidget {
                             randomRabbit,
                           );
                           return Stack(
-                            children: widgets,
+                            children: [
+                              ...widgets,
+                              Center(
+                                child: LuckWidgetRepositoryImpl()
+                                    .buildLuckWidget(context, tappedHatNumbers),
+                              ),
+                            ],
                           );
                         }
                       },
@@ -150,6 +160,27 @@ class HomePage extends StatelessWidget {
 
                   if (tappedHatNumbers.contains(randomRabbit)) {
                     saveGameEndTimeRepository.saveGameEndTime();
+                    Future.delayed(const Duration(seconds: 2), () {
+                      final luckWidget = LuckWidgetRepositoryImpl()
+                          .buildLuckWidget(context, tappedHatNumbers);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Material(
+                            type: MaterialType.transparency,
+                            child: Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: luckWidget,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    });
                   }
 
                   final widgets = generateWidgetsRepository.generateWidgets(

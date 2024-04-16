@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class LuckWidget extends StatelessWidget {
@@ -7,25 +9,29 @@ class LuckWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: AlertDialog(
           title: const Text('Your Luck Today'),
-          content: const Column(
+          content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Your luck today is'),
-              Text(
-                '100%',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  const Text('Your luck today is '),
+                  Text(
+                    '$luckPercentage%',
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                exit(0);
               },
               child: const Text('Exit'),
             ),

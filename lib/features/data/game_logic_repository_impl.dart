@@ -121,7 +121,25 @@ class LuckWidgetRepositoryImpl implements LuckWidgetRepository {
 
   @override
   double calculateLuckPercentage(int tappedHatCount) {
-    return tappedHatCount == 0 ? 0 : 100 / tappedHatCount;
+    if (tappedHatCount == 0) {
+      return 0;
+    } else if (tappedHatCount == 1) {
+      return 100;
+    } else if (tappedHatCount == 2) {
+      return 86;
+    } else if (tappedHatCount == 3) {
+      return 71;
+    } else if (tappedHatCount == 4) {
+      return 57;
+    } else if (tappedHatCount == 5) {
+      return 43;
+    } else if (tappedHatCount == 6) {
+      return 29;
+    } else if (tappedHatCount == 7) {
+      return 14;
+    } else {
+      return 0;
+    }
   }
 }
 
